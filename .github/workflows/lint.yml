@@ -23,11 +23,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install black isort mypy
         
+    - name: Create source and test directories
+      run: |
+        mkdir -p src
+        mkdir -p tests
+        
     - name: Check formatting with Black
-      run: black --check src tests
+      run: |
+        if [ -d "src" ]; then
+          black --check src
+        fi
+        if [ -d "tests" ]; then
+          black --check tests
+        fi
         
     - name: Check imports with isort
-      run: isort --check-only src tests
+      run: |
+        if [ -d "src" ]; then
+          isort --check-only src
+        fi
+        if [ -d "tests" ]; then
+          isort --check-only tests
+        fi
         
     - name: Type checking with mypy
-      run: mypy src 
+      run: |
+        if [ -d "src" ]; then
+          mypy src
+        fi 
