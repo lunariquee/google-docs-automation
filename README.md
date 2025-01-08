@@ -4,12 +4,12 @@ An advanced, open-source system for automating Google Docs operations with Pytho
 
 ## Features
 
-- 🔐 Secure OAuth2 authentication with token persistence
-- 📄 Create and modify Google Docs programmatically
-- 🎨 Advanced text formatting capabilities
-- 📋 Template-based document generation using Jinja2
-- 🔧 Modular and extensible architecture
-- 📝 Type hints for better code maintainability
+- Secure OAuth2 authentication with token persistence
+- Create and modify Google Docs programmatically
+- Advanced text formatting capabilities
+- Template-based document generation using Jinja2
+- Modular and extensible architecture
+- Type hints for better code maintainability
 
 ## Installation
 
