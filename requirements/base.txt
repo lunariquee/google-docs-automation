@@ -1,0 +1,5 @@
+google-auth-oauthlib>=0.4.6
+google-auth-httplib2>=0.1.0
+google-api-python-client>=2.0.0
+jinja2>=3.0.0
+pyyaml>=5.4.1 

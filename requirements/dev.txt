@@ -1,0 +1,9 @@
+-r base.txt
+pytest>=6.0
+pytest-cov>=2.0
+black>=21.0
+isort>=5.0
+mypy>=0.900
+pytest-watch>=4.2.0
+mkdocs>=1.2.0
+mkdocs-material>=8.0.0 
