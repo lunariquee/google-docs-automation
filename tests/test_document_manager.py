@@ -1,6 +1,6 @@
 import pytest
 from gdocs_automation.document.document_manager import DocumentManager
-from unittest.mock import MagicMock, create_autospec
+from unittest.mock import MagicMock, create_autospec, patch
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
@@ -19,7 +19,7 @@ def test_create_document():
     mock_service.documents.return_value = mock_docs
     
     # Patch the build function
-    with pytest.patch('googleapiclient.discovery.build', return_value=mock_service):
+    with patch('googleapiclient.discovery.build', return_value=mock_service):
         # Create DocumentManager instance
         doc_manager = DocumentManager(mock_creds)
         
@@ -47,7 +47,7 @@ def test_insert_text():
     mock_service.documents.return_value = mock_docs
     
     # Patch the build function
-    with pytest.patch('googleapiclient.discovery.build', return_value=mock_service):
+    with patch('googleapiclient.discovery.build', return_value=mock_service):
         # Create DocumentManager instance
         doc_manager = DocumentManager(mock_creds)
         
