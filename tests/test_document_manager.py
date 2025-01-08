@@ -1,15 +1,14 @@
 import pytest
 from gdocs_automation.document.document_manager import DocumentManager
 from unittest.mock import MagicMock
+from google.oauth2.credentials import Credentials
 
 def test_create_document():
     # Mock credentials
-    mock_credentials = MagicMock()
+    mock_creds = MagicMock(spec=Credentials)
     
-    # Create DocumentManager instance
-    doc_manager = DocumentManager(mock_credentials)
-    
-    # Mock the service create method
+    # Create DocumentManager instance with mocked services
+    doc_manager = DocumentManager(mock_creds)
     doc_manager.service.documents().create().execute.return_value = {
         'documentId': 'test_doc_id'
     }
