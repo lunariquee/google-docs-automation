@@ -1,36 +1,66 @@
 import pytest
 from gdocs_automation.document.document_manager import DocumentManager
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, create_autospec
 from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
 
 def test_create_document():
-    # Mock credentials
+    # Mock credentials with universe_domain
     mock_creds = MagicMock(spec=Credentials)
+    mock_creds.universe_domain = "googleapis.com"
     
-    # Create DocumentManager instance with mocked services
-    doc_manager = DocumentManager(mock_creds)
-    doc_manager.service.documents().create().execute.return_value = {
-        'documentId': 'test_doc_id'
-    }
+    # Create mock service
+    mock_service = MagicMock()
+    mock_docs = MagicMock()
+    mock_create = MagicMock()
+    mock_create.execute.return_value = {'documentId': 'test_doc_id'}
     
-    # Test document creation
-    doc_id = doc_manager.create_document("Test Document")
-    assert doc_id == 'test_doc_id'
+    mock_docs.create.return_value = mock_create
+    mock_service.documents.return_value = mock_docs
     
-    # Verify the service was called correctly
-    doc_manager.service.documents().create.assert_called_once_with(
-        body={'title': 'Test Document'}
-    )
+    # Patch the build function
+    with pytest.patch('googleapiclient.discovery.build', return_value=mock_service):
+        # Create DocumentManager instance
+        doc_manager = DocumentManager(mock_creds)
+        
+        # Test document creation
+        doc_id = doc_manager.create_document("Test Document")
+        assert doc_id == 'test_doc_id'
+        
+        # Verify the service was called correctly
+        mock_docs.create.assert_called_once_with(
+            body={'title': 'Test Document'}
+        )
 
 def test_insert_text():
-    # Mock credentials
-    mock_credentials = MagicMock()
+    # Mock credentials with universe_domain
+    mock_creds = MagicMock(spec=Credentials)
+    mock_creds.universe_domain = "googleapis.com"
     
-    # Create DocumentManager instance
-    doc_manager = DocumentManager(mock_credentials)
+    # Create mock service
+    mock_service = MagicMock()
+    mock_docs = MagicMock()
+    mock_batch_update = MagicMock()
+    mock_batch_update.execute.return_value = {}
     
-    # Test text insertion
-    doc_manager.insert_text('test_doc_id', 'Hello World')
+    mock_docs.batchUpdate.return_value = mock_batch_update
+    mock_service.documents.return_value = mock_docs
     
-    # Verify the service was called correctly
-    doc_manager.service.documents().batchUpdate.assert_called_once() 
+    # Patch the build function
+    with pytest.patch('googleapiclient.discovery.build', return_value=mock_service):
+        # Create DocumentManager instance
+        doc_manager = DocumentManager(mock_creds)
+        
+        # Test text insertion
+        doc_manager.insert_text('test_doc_id', 'Hello World')
+        
+        # Verify the service was called correctly
+        mock_docs.batchUpdate.assert_called_once_with(
+            documentId='test_doc_id',
+            body={'requests': [{
+                'insertText': {
+                    'location': {'index': 1},
+                    'text': 'Hello World'
+                }
+            }]}
+        ) 
