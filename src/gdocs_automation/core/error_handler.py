@@ -1,4 +1,4 @@
-from typing import Type, Callable, Any
+from typing import Type, Callable, Any, Tuple
 import logging
 import functools
 
@@ -19,7 +19,7 @@ class TemplateError(GDocsAutomationError):
     pass
 
 def handle_errors(
-    error_types: tuple[Type[Exception], ...] = (Exception,),
+    error_types: Tuple[Type[Exception], ...] = (Exception,),
     logger: logging.Logger = None,
     default_return: Any = None
 ) -> Callable:
