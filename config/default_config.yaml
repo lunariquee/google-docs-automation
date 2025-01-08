@@ -1,0 +1,32 @@
+document:
+  default_font: Arial
+  default_font_size: 11
+  default_margin: 1.0
+  allowed_fonts:
+    - Arial
+    - Times New Roman
+    - Calibri
+    - Roboto
+
+templates:
+  path: templates
+  default_extension: .j2
+  cache_enabled: true
+  cache_timeout: 3600
+
+logging:
+  level: INFO
+  file: logs/gdocs_automation.log
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+api:
+  retry_attempts: 3
+  timeout: 30
+  batch_size: 100
+
+plugins:
+  enabled: true
+  auto_discover: true
+  directory: plugins 
