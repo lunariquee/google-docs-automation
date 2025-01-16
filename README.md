@@ -15,7 +15,7 @@ An advanced, open-source system for automating Google Docs operations with Pytho
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/gdocs-automation.git
+git clone https://github.com/lunariquee/gdocs-automation.git
 cd gdocs-automation
 ```
 
